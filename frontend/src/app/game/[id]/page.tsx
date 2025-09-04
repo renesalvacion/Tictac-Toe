@@ -31,7 +31,7 @@ export default function GamePage() {
   };
 
   const apiBase = useMemo(() => {
-    return process.env.NEXT_PUBLIC_API_BASE || "http://localhost:4000";
+    return process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
   }, []);
 
   useEffect(() => {
@@ -110,13 +110,13 @@ export default function GamePage() {
       winner === "X" ? "player1" : winner === "O" ? "player2" : "draw";
     try {
       setSubmitting(true);
-      await fetch(`${apiBase}/api/games/${game._id}/rounds`, {
+      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/games/${game._id}/rounds`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ winner: roundWinner, board: [board.slice(0,3), board.slice(3,6), board.slice(6,9)] }),
       });
       if (choice === "stop") {
-        await fetch(`${apiBase}/api/games/${game._id}/stop`, { method: "POST" });
+        await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/games/${game._id}/stop`, { method: "POST" });
         router.replace("/");
         return;
       }
