@@ -8,14 +8,21 @@ const mongoose = require('mongoose');
 
 const app = express();
 const corsOptions = {
-    origin: [
-      "http://localhost:3000", // dev
-      "https://tictac-toe-ebon.vercel.app",
-      "" // your real Vercel frontend domain
-    ],
+    origin: function (origin, callback) {
+      const allowedOrigins = [
+        "http://localhost:3000",
+        "https://tictac-toe-ebon.vercel.app"
+      ];
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   };
+  
 app.use(cors(corsOptions));
 app.use(express.json());
 
