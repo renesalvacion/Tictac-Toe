@@ -1,0 +1,250 @@
+@import "tailwindcss";
+
+[data-theme="light"], :root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+[data-theme="dark"] {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+}
+
+
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-poppins), Arial, Helvetica, sans-serif;
+}
+
+/* Pencil cursor utility */
+.cursor-pencil {
+  cursor: url('/pencil.svg') 0 24, pointer !important;
+}
+
+/* Sketch-like tic-tac-toe styles */
+.ttt-card {
+  box-shadow: 0 1px 2px rgba(0,0,0,.06), 0 1px 3px rgba(0,0,0,.1);
+}
+.ttt-cell {
+  border: 3px solid currentColor;
+  background-image: repeating-linear-gradient(135deg, rgba(0,0,0,0.06) 0, rgba(0,0,0,0.06) 6px, transparent 6px, transparent 10px);
+}
+.ttt-cell:not(:nth-child(3n)) {
+  border-right-width: 0;
+}
+.ttt-cell:nth-child(n+4) {
+  border-top-width: 0;
+}
+
+.ttt-ink { color: #0b2a6b; }
+.ttt-board-bg { background-color: #f4f5ef; }
+
+/* Notebook-styled card */
+.notebook-card {
+  position: relative;
+  background: linear-gradient(#fafaf4,#f3f4ed);
+  background-image:
+    repeating-linear-gradient(180deg, rgba(11,42,107,0.12) 0 2px, transparent 2px 32px),
+    linear-gradient(#fafaf4,#f3f4ed);
+  border: 2px solid rgba(0,0,0,.25);
+  box-shadow: 0 6px 16px rgba(0,0,0,.08);
+}
+
+
+
+.notebook-card::after {
+  content: "";
+  position: absolute;
+  left: 6px;
+  top: 18px;
+  width: 8px;
+  height: 8px;
+  border-radius: 9999px;
+  background: #1f2937;
+  box-shadow:
+    0 28px 0 #1f2937,
+    0 56px 0 #1f2937,
+    0 84px 0 #1f2937,
+    0 112px 0 #1f2937,
+    0 140px 0 #1f2937,
+    0 168px 0 #1f2937;
+  opacity: .25;
+}
+
+/* Notebook-styled button */
+.notebook-btn {
+  position: relative;
+  background: linear-gradient(#fff,#f7f7f2);
+  border: 2px solid rgba(0,0,0,.25);
+  box-shadow: 0 3px 0 rgba(0,0,0,.18);
+}
+.notebook-btn:hover { filter: brightness(.98); }
+.notebook-btn:active { transform: translateY(1px); box-shadow: 0 2px 0 rgba(0,0,0,.2); }
+
+/* Dark mode variants for readability */
+[data-theme="dark"] .notebook-card {
+  background: linear-gradient(#121416,#0d0f11);
+  background-image:
+    repeating-linear-gradient(180deg, rgba(155, 183, 255, 0.08) 0 2px, transparent 2px 32px),
+    linear-gradient(#121416,#0d0f11);
+  border-color: rgba(255,255,255,.18);
+  box-shadow: 0 6px 16px rgba(0,0,0,.6);
+}
+
+[data-theme="dark"] .notebook-btn {
+  background: linear-gradient(#171a1d,#121416);
+  border-color: rgba(255,255,255,.2);
+  box-shadow: 0 3px 0 rgba(255,255,255,.06);
+}
+
+[data-theme="dark"] .ttt-ink { color: #9bb7ff; }
+
+/* Animated paper background */
+@keyframes paperDrift {
+  0% { background-position: 0px 0px, 0px 0px; }
+  50% { background-position: 24px 16px, -18px -12px; }
+  100% { background-position: 0px 0px, 0px 0px; }
+}
+
+.bg-paper-anim {
+  /* layer 1: paper fibers */
+  background-image:
+    repeating-linear-gradient(180deg, rgba(0,0,0,0.05) 0 1px, transparent 1px 3px),
+    repeating-linear-gradient(90deg, rgba(0,0,0,0.04) 0 1px, transparent 1px 4px);
+  animation: paperDrift 5s ease-in-out infinite;
+}
+
+/* Moving pencil layer */
+@keyframes pencilFloat {
+  0% { transform: translate(-10%, 10%) rotate(-12deg); }
+  50% { transform: translate(20%, -10%) rotate(8deg); }
+  100% { transform: translate(-10%, 10%) rotate(-12deg); }
+}
+
+.pen-layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image: url('/pencil.svg');
+  background-repeat: no-repeat;
+  background-size: 80px 80px;
+  background-position: right 10% bottom 15%;
+  opacity: 0.18;
+  animation: pencilFloat 7s ease-in-out infinite;
+  will-change: transform;
+}
+
+/* Additional lightweight background layers for depth (optimized) */
+@keyframes paperDriftSlow {
+  0% { background-position: 0 0; }
+  50% { background-position: -12px 10px; }
+  100% { background-position: 0 0; }
+}
+
+.paper-layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image: repeating-linear-gradient(135deg, rgba(0,0,0,0.03) 0 2px, transparent 2px 6px), url('/notebook.svg');
+  opacity: 0.25;
+  animation: paperDriftSlow 12s ease-in-out infinite;
+  will-change: background-position;
+  background-repeat: repeat, no-repeat;
+  background-position: 0 0, left 5% bottom 8%;
+  background-size: auto, 200px 250px;
+}
+
+/* Two extra pens with different paths and sizes */
+@keyframes pencilFloatAlt {
+  0% { transform: translate(15%, -15%) rotate(18deg); }
+  50% { transform: translate(-10%, 5%) rotate(-10deg); }
+  100% { transform: translate(15%, -15%) rotate(18deg); }
+}
+
+.pen-layer-2 {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image: url('/pencil.svg');
+  background-repeat: no-repeat;
+  background-size: 56px 56px;
+  background-position: left 12% top 18%;
+  opacity: 0.14;
+  animation: pencilFloatAlt 9s ease-in-out infinite;
+  will-change: transform;
+}
+
+@keyframes pencilFloatAlt2 {
+  0% { transform: translate(-20%, -5%) rotate(-25deg); }
+  50% { transform: translate(5%, 15%) rotate(12deg); }
+  100% { transform: translate(-20%, -5%) rotate(-25deg); }
+}
+
+.pen-layer-3 {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image: url('/pencil.svg');
+  background-repeat: no-repeat;
+  background-size: 64px 64px;
+  background-position: right 22% top 20%;
+  opacity: 0.12;
+  animation: pencilFloatAlt2 11s ease-in-out infinite;
+  will-change: transform;
+}
+
+/* Image-based pens for guaranteed motion */
+@keyframes penImg1 {
+  0% { transform: translate(-20vw, 10vh) rotate(-15deg); }
+  50% { transform: translate(10vw, -5vh) rotate(5deg); }
+  100% { transform: translate(-20vw, 10vh) rotate(-15deg); }
+}
+.pen-img { position: absolute; right: 10%; bottom: 15%; width: 80px; opacity: .18; animation: penImg1 7s ease-in-out infinite; }
+
+@keyframes penImg2 {
+  0% { transform: translate(15vw, -15vh) rotate(20deg); }
+  50% { transform: translate(-10vw, 5vh) rotate(-10deg); }
+  100% { transform: translate(15vw, -15vh) rotate(20deg); }
+}
+.pen-img-2 { position: absolute; left: 12%; top: 18%; width: 56px; opacity: .14; animation: penImg2 9s ease-in-out infinite; }
+
+@keyframes penImg3 {
+  0% { transform: translate(-18vw, -8vh) rotate(-25deg); }
+  50% { transform: translate(6vw, 12vh) rotate(12deg); }
+  100% { transform: translate(-18vw, -8vh) rotate(-25deg); }
+}
+.pen-img-3 { position: absolute; right: 22%; top: 20%; width: 64px; opacity: .12; animation: penImg3 11s ease-in-out infinite; }
+
+/* Moving notebooks */
+@keyframes book1 {
+  0% { transform: translate(-12vw, 6vh) rotate(-6deg); }
+  50% { transform: translate(8vw, -6vh) rotate(6deg); }
+  100% { transform: translate(-12vw, 6vh) rotate(-6deg); }
+}
+.book-img { position: absolute; left: 6%; bottom: 10%; width: 160px; opacity: .18; animation: book1 10s ease-in-out infinite; }
+
+@keyframes book2 {
+  0% { transform: translate(10vw, -8vh) rotate(4deg); }
+  50% { transform: translate(-8vw, 6vh) rotate(-8deg); }
+  100% { transform: translate(10vw, -8vh) rotate(4deg); }
+}
+.book-img-2 { position: absolute; right: 8%; top: 12%; width: 140px; opacity: .14; animation: book2 12s ease-in-out infinite; }
+
+@keyframes book3 {
+  0% { transform: translate(-8vw, -4vh) rotate(-10deg); }
+  50% { transform: translate(6vw, 10vh) rotate(8deg); }
+  100% { transform: translate(-8vw, -4vh) rotate(-10deg); }
+}
+.book-img-3 { position: absolute; left: 20%; top: 18%; width: 120px; opacity: .12; animation: book3 14s ease-in-out infinite; }
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .bg-paper-anim,
+  .paper-layer,
+  .pen-layer,
+  .pen-layer-2,
+  .pen-layer-3 { animation: none; }
+}
+
