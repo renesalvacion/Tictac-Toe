@@ -1,4 +1,7 @@
 require('dotenv').config();
+
+console.log("🔍 Checking MONGO_URI:", process.env.MONGO_URI ? "✅ Found" : "❌ Not Found");
+
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
