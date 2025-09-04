@@ -5,6 +5,7 @@ console.log("🔍 Checking MONGO_URI:", process.env.MONGO_URI ? "✅ Found" : "�
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const rateLimit = require('express-rate-limit');
 
 const app = express();
 const corsOptions = {
@@ -22,9 +23,19 @@ const corsOptions = {
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   };
+
+  
+const limiter = rateLimit({
+    windowMs: 1 * 60 * 1000, // 1 minute
+    max: 60, // limit each IP to 60 requests per windowMs
+    standardHeaders: true,
+    legacyHeaders: false,
+    message: { error: 'Too many requests, please try again later.' },
+  });
   
 app.use(cors(corsOptions));
 app.use(express.json());
+app.use(limiter);
 
 const mongoUri = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/tictactoe';
 
