@@ -11,7 +11,11 @@ export default function NewGamePage() {
 
   const apiBase = useMemo(() => {
     return process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+    console.log("API BASE:", apiBase);
+
   }, []);
+  console.log("API BASE:", apiBase);
+
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
