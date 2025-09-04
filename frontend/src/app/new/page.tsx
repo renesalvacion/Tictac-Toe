@@ -9,8 +9,10 @@ export default function NewGamePage() {
   const [error, setError] = useState("");
   const router = useRouter();
 
+  console.log("NEXT_PUBLIC_API_URL from env:", process.env.NEXT_PUBLIC_API_URL);
+
   const apiBase = useMemo(() => {
-    return process.env.NEXT_PUBLIC_API_URL || "https://tictac-toe.onrender.com";
+    return process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
 
 
   }, []);

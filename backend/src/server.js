@@ -10,7 +10,8 @@ const app = express();
 const corsOptions = {
     origin: [
       "http://localhost:3000", // dev
-      "https://tictac-toe-ebon.vercel.app/", // your real Vercel frontend domain
+      "https://tictac-toe-ebon.vercel.app",
+      "" // your real Vercel frontend domain
     ],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,

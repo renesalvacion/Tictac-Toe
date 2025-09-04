@@ -30,6 +30,7 @@ export default function GamePage() {
     return 0;
   };
 
+  console.log("NEXT_PUBLIC_API_URL from env:", process.env.NEXT_PUBLIC_API_URL);
   const apiBase = useMemo(() => {
     return process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
   }, []);
