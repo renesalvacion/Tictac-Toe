@@ -7,7 +7,15 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 
 const app = express();
-app.use(cors());
+const corsOptions = {
+    origin: [
+      "http://localhost:3000", // dev
+      "https://tictac-toe-ebon.vercel.app/", // your real Vercel frontend domain
+    ],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  };
+app.use(cors(corsOptions));
 app.use(express.json());
 
 const mongoUri = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/tictactoe';
