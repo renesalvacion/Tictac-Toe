@@ -10,7 +10,7 @@ export default function NewGamePage() {
   const router = useRouter();
 
   const apiBase = useMemo(() => {
-    return process.env.NEXT_PUBLIC_API_BASE || "http://localhost:4000";
+    return process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
   }, []);
 
   const onSubmit = async (e: React.FormEvent) => {
